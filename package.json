@@ -1,0 +1,27 @@
+{
+  "name": "projeto-banco-de-dados",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/express": "^5.0.0",
+    "prisma": "^6.0.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.0-dev.20241204"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.0.1",
+    "express": "^4.21.1",
+    "express-async-errors": "^3.1.1",
+    "jest": "^29.7.0",
+    "projeto-banco-de-dados": "file:",
+    "supertest": "^7.0.0"
+  }
+}
