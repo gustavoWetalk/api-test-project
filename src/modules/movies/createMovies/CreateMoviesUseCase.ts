@@ -8,36 +8,32 @@ interface CreateMovieResult {
   error?: string;
 }
 
-export class CreateMovieUseCase {
-  async execute({
-    title,
-    duration,
-    release_date,
-  }: CreateMovieDTO): Promise<CreateMovieResult> {
-    const MovieAlreadyExist = await prisma.movie.findUnique({
-      where: {
-        title,
-      },
-    });
-
-    if (MovieAlreadyExist) {
-      return {
-        success: false,
-        error: "Filme já cadastrado no sistema",
-      };
-    }
-
-    const movie = await prisma.movie.create({
-      data: {
-        title,
-        duration,
-        release_date,
-      },
-    });
-
+export async function CreateMovieUseCase({
+  title,
+  duration,
+  release_date,
+}: CreateMovieDTO): Promise<CreateMovieResult> {
+  const MovieAlreadyExist = await prisma.movie.findUnique({
+    where: {
+      title,
+    },
+  });
+  if (MovieAlreadyExist) {
     return {
-      success: true,
-      data: movie,
+      success: false,
+      error: "Filme já cadastrado no sistema",
     };
   }
+  const movie = await prisma.movie.create({
+    data: {
+      title,
+      duration,
+      release_date,
+    },
+  });
+
+  return {
+    success: true,
+    data: movie,
+  };
 }

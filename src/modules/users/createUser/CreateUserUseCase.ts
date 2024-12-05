@@ -8,8 +8,11 @@ interface CreateUserResult {
   error?: string;
 }
 
-export class CreateUserUseCase {
-  async execute({ name, email }: CreateUserDTO): Promise<CreateUserResult> {
+export async function CreateUserUseCase({
+  name,
+  email,
+}: CreateUserDTO): Promise<CreateUserResult> {
+  {
     const userAlreadyExist = await prisma.user.findUnique({
       where: {
         email,
@@ -17,8 +20,7 @@ export class CreateUserUseCase {
     });
 
     function ValidarEmail(email: string) {
-     var emailPattern =
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailPattern.test(email);
     }
 
