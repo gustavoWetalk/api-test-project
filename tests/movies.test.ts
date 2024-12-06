@@ -8,7 +8,7 @@ app.use(express.json());
 app.use("/movies", movieRoutes);
 
 describe("Testando rotas de filmes", () => {
-  it("Deve criar um filme com sucesso", async () => {
+  it("Não deve criar o filme, pois ele já está cadastrado", async () => {
     const response = await request(app)
       .post("/movies")
       .send({
@@ -17,13 +17,11 @@ describe("Testando rotas de filmes", () => {
         release_date: "2010-06-10T00:00:00.000Z",
       })
       .expect("Content-Type", /json/)
-      .expect(201);
+      .expect(400);
 
-    expect(response.body).toHaveProperty("title", "Clube da Luta");
-    expect(response.body).toHaveProperty("duration", 2);
     expect(response.body).toHaveProperty(
-      "release_date",
-      "2010-06-10T00:00:00.000Z"
+      "message",
+      "Filme já cadastrado no sistema"
     );
   });
 });

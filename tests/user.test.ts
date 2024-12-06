@@ -8,7 +8,7 @@ app.use(express.json());
 app.use("/users", userRoutes);
 
 describe("Testando rota de usuário", () => {
-  it("Deve criar um usuário com sucesso", async () => {
+  it("Não deve criar o usuário, porque ele já está cadastrado no sistema", async () => {
     const response = await request(app)
       .post("/users")
       .send({
@@ -16,9 +16,26 @@ describe("Testando rota de usuário", () => {
         email: "Gustavo@batata123.com.br",
       })
       .expect("Content-Type", /json/)
-      .expect(201);
+      .expect(400);
 
-    expect(response.body).toHaveProperty("name", "William");
-    expect(response.body).toHaveProperty("email", "Gustavo@batata123.com.br");
+    expect(response.body).toHaveProperty("message", "Usuário já existe!");
+  });
+});
+
+describe("Testando rota de usuário", () => {
+  it("Não deve criar usuário, pois o email é inválido", async () => {
+    const response = await request(app)
+      .post("/users")
+      .send({
+        name: "Batata",
+        email: "123345664",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Email inválido, por favor cadastre um email válido!!"
+    );
   });
 });
