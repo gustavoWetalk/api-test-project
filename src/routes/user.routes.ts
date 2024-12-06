@@ -3,6 +3,6 @@ import { CreateUserController } from "../modules/users/createUser/CreateUserCont
 
 const userRoutes = Router();
 
-userRoutes.post("/", CreateUserController);
+userRoutes.post("/", (req, res) => CreateUserController(req, res));
 
 export { userRoutes };

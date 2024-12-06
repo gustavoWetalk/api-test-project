@@ -4,7 +4,7 @@ import { CreateMovieRentController } from "../modules/createMoviesRent/CreateMov
 
 const movieRoutes = Router();
 
-movieRoutes.post("/", CreateMovieController);
-movieRoutes.post("/rent", CreateMovieRentController);
+movieRoutes.post("/", (req, res) => CreateMovieController(req, res));
+movieRoutes.post("/rent", (req, res) => CreateMovieRentController(req, res))
 
 export { movieRoutes };

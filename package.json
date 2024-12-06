@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/server.ts"
   },
   "author": "",
@@ -12,17 +12,20 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
     "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
     "prisma": "^6.0.1",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.0-dev.20241204"
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "express": "^4.21.1",
     "express-async-errors": "^3.1.1",
-    "jest": "^29.7.0",
-    "projeto-banco-de-dados": "file:",
-    "supertest": "^7.0.0"
+    "projeto-banco-de-dados": "file:"
   }
 }

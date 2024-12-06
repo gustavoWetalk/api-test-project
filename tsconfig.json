@@ -5,7 +5,12 @@
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true, // Ignora verificações de tipo em arquivos de definição de biblioteca
-      "forceConsistentCasingInFileNames": true
-    }
+      "forceConsistentCasingInFileNames": true,
+       "outDir": "./dist",
+       "types": ["jest", "node"],
+       "moduleResolution": "node",
+    },
+    "include": ["src/**/*", "tests/**/*"],
+    "exclude": ["node_modules"]
   }
   
