@@ -39,3 +39,18 @@ describe("Testando rota de usuário", () => {
     );
   });
 });
+describe("Testando rota de usuário", () => {
+  it("Usuário criado com sucesso", async () => {
+    const response = await request(app)
+      .post("/users")
+      .send({
+        name: "Batata",
+        email: "Gustavo@arroz.com.br",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201);
+
+    expect(response.body).toHaveProperty("name", "Batata");
+    expect(response.body).toHaveProperty("email", "Gustavo@arroz.com.br");
+  });
+});

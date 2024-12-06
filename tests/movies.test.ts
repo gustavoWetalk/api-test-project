@@ -25,3 +25,23 @@ describe("Testando rotas de filmes", () => {
     );
   });
 });
+describe("Testando rotas de filmes", () => {
+  it("Filme criado com sucesso", async () => {
+    const response = await request(app)
+      .post("/movies")
+      .send({
+        title: "Capitão fantastico",
+        duration: 2,
+        release_date: "2010-06-10T00:00:00.000Z",
+      })
+      .expect("Content-Type", /json/)
+      .expect(201);
+
+    expect(response.body).toHaveProperty("title", "Capitão fantastico");
+    expect(response.body).toHaveProperty("duration", 2);
+    expect(response.body).toHaveProperty(
+      "release_date",
+      "2010-06-10T00:00:00.000Z"
+    );
+  });
+});
