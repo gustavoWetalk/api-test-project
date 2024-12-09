@@ -40,3 +40,19 @@ describe("Testando rota de usuário", () => {
     );
   });
 });
+
+describe("Testando rota de usuário", () => {
+  it("Não foi possível fazer o update do filme, pois ele não está presente no sistema.", async () => {
+    const movieId = "12233214241142421421";
+    const response = await request(app)
+      .put(`/movies/update/${movieId}`)
+      .send({})
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Não foi possível atualizar o filme"
+    );
+  });
+});

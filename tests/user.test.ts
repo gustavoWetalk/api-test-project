@@ -41,7 +41,7 @@ describe("Testando rota de usuário", () => {
 });
 
 describe("Testando rota de usuário", () => {
-  it("Não é possível fazer update no usuário, pois o id não existe.", async () => {
+  it("Não é possível fazer update no usuário, pois o id não existe", async () => {
     const userId = "123456";
     const response = await request(app)
       .put(`/users/update/${userId}`)
@@ -60,11 +60,13 @@ describe("Testando rota de usuário", () => {
 });
 
 describe("Testando rota de usuário", () => {
-  it("Não é possível fazer update no usuário, pois nenhum parâmetro foi mandado.", async () => {
+  it("Não é possível fazer update no usuário, pois nenhum parâmetro foi mandado", async () => {
     const userId = "32c53343-bbec-43a7-8561-b2ca95efaa2c";
     const response = await request(app)
       .put(`/users/update/${userId}`)
-      .send({})
+      .send({
+       
+      })
       .expect("Content-Type", /json/)
       .expect(400);
 
@@ -76,20 +78,19 @@ describe("Testando rota de usuário", () => {
 });
 
 describe("Testando rota de usuário", () => {
-  it("Não é possível fazer update no usuário, pois uma das informações estava sem informação.", async () => {
+  it("Não é possível fazer update no usuário, pois uma das informações estava", async () => {
     const userId = "32c53343-bbec-43a7-8561-b2ca95efaa2c";
     const response = await request(app)
       .put(`/users/update/${userId}`)
       .send({
-        name: "Batata",
-        email: "",
+       
       })
       .expect("Content-Type", /json/)
       .expect(400);
 
     expect(response.body).toHaveProperty(
       "message",
-      "Campos sem informações não são permitidos"
+      "Não foi possível atualizar o Usuário, você deve colocar pelo menos uma informação para atualizar o usuário"
     );
   });
 });
@@ -108,3 +109,9 @@ describe("Testando rota de usuário", () => {
     );
   });
 });
+
+
+
+
+
+
