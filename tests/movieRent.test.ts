@@ -8,17 +8,17 @@ app.use(express.json());
 app.use("/movies", movieRoutes);
 
 describe("Testando rotas de aluguel dos filmes", () => {
-  it("O aluguel não pode ser feito, pois o filme já foi alugado", async () => {
+  it("O aluguel não pode ser feito, pois o usuário não existe no sistema", async () => {
     const response = await request(app)
       .post("/movies/rent")
       .send({
-        userId: "1f04b48f-a52b-4fe8-ac94-239832fac949",
-        movieId: "7640548b-083f-45ec-9c5c-839174468a1b",
+        userId: "1f04b48f-a52b-4fe8-ac94-239832fac949090909",
+        movieId: "716561f3-f98b-4cb7-9fa5-9251d5af35c3",
       })
       .expect("Content-Type", /json/)
       .expect(400);
 
-    expect(response.body).toHaveProperty("message", "Filme já foi alugado");
+    expect(response.body).toHaveProperty("message", "Usuário não existe");
   });
 });
 
@@ -41,16 +41,31 @@ describe("Testando rotas de aluguel dos filmes", () => {
 });
 
 describe("Testando rotas de aluguel dos filmes", () => {
-  it("O alguel não pode ser feito, pois o usuário não existe no sistema", async () => {
+  it("O aluguel não pode ser feito, pois o filme já foi alugado", async () => {
     const response = await request(app)
       .post("/movies/rent")
       .send({
-        userId: "1f04b48f-a52b-4fe8-ac94-239832fa78788",
-        movieId: "20bc53f6-e148-4a90-9288-f2ff489c171c",
+        userId: "1f04b48f-a52b-4fe8-ac94-239832fac949",
+        movieId: "0b8ccf7d-9414-4d20-a3de-734ebb49abfa",
       })
       .expect("Content-Type", /json/)
       .expect(400);
 
-    expect(response.body).toHaveProperty("message", "Usuário não existe");
+    expect(response.body).toHaveProperty("message", "Filme já foi alugado");
+  });
+});
+
+describe("Testando rotas de aluguel dos filmes", () => {
+  it("O aluguel não pode ser excluído, pois não foi encontrado no sistema", async () => {
+    const response = await request(app)
+      .delete("/movies/rent/delete")
+      .send({
+        userId: "1f04b48f-a52b-4fe8-ac94-239832fac9499090",
+        movieId: "0b8ccf7d-9414-4d20-a3de-734ebb49abfa090090",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty("message", "Não foi possível excluir o aluguel, pois ele não se encontra no sistema!");
   });
 });

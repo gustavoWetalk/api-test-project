@@ -36,7 +36,7 @@ describe("Testando rota de usuário", () => {
 
     expect(response.body).toHaveProperty(
       "message",
-      "Não foi possível excluir o filme, pois ele não se encontra no sistema!"
+      "Não foi possível excluir o filme do sistema, pois ele não foi encontrado"
     );
   });
 });

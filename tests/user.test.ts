@@ -50,7 +50,7 @@ describe("Testando rota de usuário", () => {
 
     expect(response.body).toHaveProperty(
       "message",
-      "Não foi possível excluir o usuário, pois ele não foi encontrado no sistema!"
+      "Não foi possível excluir o usuário do sistema, pois ele não foi encontrado"
     );
   });
 });

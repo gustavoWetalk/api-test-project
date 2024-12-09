@@ -9,7 +9,21 @@ interface CreateMovieResult {
 export async function DeleteUserUseCase({
   id,
 }: any): Promise<CreateMovieResult> {
-  const userDelete = await prisma.user.delete({
+  const userExists = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!userExists) {
+    return {
+      success: false,
+      error:
+        "Não foi possível excluir o usuário do sistema, pois ele não foi encontrado",
+    };
+  }
+
+  await prisma.user.delete({
     where: {
       id,
     },
