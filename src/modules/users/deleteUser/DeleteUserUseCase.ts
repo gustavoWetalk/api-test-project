@@ -6,17 +6,17 @@ interface CreateMovieResult {
   error?: string;
 }
 
-export async function DeleteMovieUseCase({
+export async function DeleteUserUseCase({
   id,
 }: any): Promise<CreateMovieResult> {
-  const MovieDelete = await prisma.movie.delete({
+  const userDelete = await prisma.user.delete({
     where: {
       id,
     },
   });
-  
+
   return {
     success: true,
-    data: "Produto Excluído com sucesso",
+    data: "Usuário Excluído com sucesso",
   };
 }
