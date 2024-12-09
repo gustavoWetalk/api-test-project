@@ -24,6 +24,7 @@ export async function CreateMovieRentUseCase({
       error: "Filme não cadastrado no sistema",
     };
   }
+
   const movieAlreadyRented = await prisma.moviesRent.findFirst({
     where: {
       movieId,
