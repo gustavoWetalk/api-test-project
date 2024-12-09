@@ -41,6 +41,60 @@ describe("Testando rota de usuário", () => {
 });
 
 describe("Testando rota de usuário", () => {
+  it("Não é possível fazer update no usuário, pois o id não existe.", async () => {
+    const userId = "123456";
+    const response = await request(app)
+      .put(`/users/update/${userId}`)
+      .send({
+        name: "Batata",
+        email: "123345664",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Não foi possível atualizar o Usuário"
+    );
+  });
+});
+
+describe("Testando rota de usuário", () => {
+  it("Não é possível fazer update no usuário, pois nenhum parâmetro foi mandado.", async () => {
+    const userId = "32c53343-bbec-43a7-8561-b2ca95efaa2c";
+    const response = await request(app)
+      .put(`/users/update/${userId}`)
+      .send({})
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Não foi possível atualizar o Usuário, você deve colocar pelo menos uma informação para atualizar o usuário"
+    );
+  });
+});
+
+describe("Testando rota de usuário", () => {
+  it("Não é possível fazer update no usuário, pois uma das informações estava sem informação.", async () => {
+    const userId = "32c53343-bbec-43a7-8561-b2ca95efaa2c";
+    const response = await request(app)
+      .put(`/users/update/${userId}`)
+      .send({
+        name: "Batata",
+        email: "",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Campos sem informações não são permitidos"
+    );
+  });
+});
+
+describe("Testando rota de usuário", () => {
   it("Não deve fazer o delete do usuário, pois ele não existe no sistema.", async () => {
     const userId = "123456";
     const response = await request(app)

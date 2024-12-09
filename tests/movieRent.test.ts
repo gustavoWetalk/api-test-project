@@ -66,6 +66,9 @@ describe("Testando rotas de aluguel dos filmes", () => {
       .expect("Content-Type", /json/)
       .expect(400);
 
-    expect(response.body).toHaveProperty("message", "Não foi possível excluir o aluguel, pois ele não se encontra no sistema!");
+    expect(response.body).toHaveProperty(
+      "message",
+      "Não foi possível excluir o aluguel, pois ele não se encontra no sistema!"
+    );
   });
 });
