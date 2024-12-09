@@ -22,7 +22,7 @@ export async function DeleteMovieController(
         .status(400)
         .json({
           message:
-            "Não foi possível excluir o filme, pois ele não se encontra no sistema!!",
+            "Não foi possível excluir o filme, pois ele não se encontra no sistema!",
         });
       return;
     }

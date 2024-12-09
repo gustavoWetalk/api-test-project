@@ -26,3 +26,17 @@ describe("Testando rotas de filmes", () => {
   });
 });
 
+describe("Testando rota de usuário", () => {
+  it("Não deve fazer o delete do filme, pois ele não existe no sistema.", async () => {
+    const movieId = "123456";
+    const response = await request(app)
+      .delete(`/movies/delete/${movieId}`)
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Não foi possível excluir o filme, pois ele não se encontra no sistema!"
+    );
+  });
+});

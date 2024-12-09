@@ -40,4 +40,17 @@ describe("Testando rota de usuário", () => {
   });
 });
 
+describe("Testando rota de usuário", () => {
+  it("Não deve fazer o delete do usuário, pois ele não existe no sistema.", async () => {
+    const userId = "123456";
+    const response = await request(app)
+      .delete(`/users/delete/${userId}`)
+      .expect("Content-Type", /json/)
+      .expect(400);
 
+    expect(response.body).toHaveProperty(
+      "message",
+      "Não foi possível excluir o usuário, pois ele não foi encontrado no sistema!"
+    );
+  });
+});
