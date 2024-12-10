@@ -72,3 +72,43 @@ describe("Testando rotas de aluguel dos filmes", () => {
     );
   });
 });
+
+describe("Testando rotas de aluguel dos filmes", () => {
+  it("O aluguel não pode sofer o update, pois não foi encontrado no sistema", async () => {
+    const response = await request(app)
+      .put("/movies/rent/update")
+      .send({
+        userId: "1f04b48f-a52b-4fe8-ac94-239832fac9499090",
+        movieId: "0b8ccf7d-9414-4d20-a3de-734ebb49abfa090090",
+        newMovieId: "ttrtrgtgrgtrtgrtgtgr",
+        newUserId: "ttrtrgtgrgtrtgrtgtgr",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Registro não encontrado para os critérios especificados."
+    );
+  });
+});
+
+describe("Testando rotas de aluguel dos filmes", () => {
+  it("O aluguel não pode sofer o update, pois não foi encontrado no sistema", async () => {
+    const response = await request(app)
+      .put("/movies/rent/update")
+      .send({
+        userId: "",
+        movieId: "0b8ccf7d-9414-4d20-a3de-734ebb49abfa090090",
+        newMovieId: "ttrtrgtgrgtrtgrtgtgr",
+        newUserId: "ttrtrgtgrgtrtgrtgtgr",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Ambos userId e movieId devem ser fornecidos para localizar o registro."
+    );
+  });
+});
