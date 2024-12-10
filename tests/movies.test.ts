@@ -42,8 +42,8 @@ describe("Testando rota de usuário", () => {
 });
 
 describe("Testando rota de usuário", () => {
-  it("Não foi possível fazer o update do filme, pois ele não está presente no sistema.", async () => {
-    const movieId = "12233214241142421421";
+  it("Não deve fazer o update do filme, pois o id não foi encontrado.", async () => {
+    const movieId = "123456";
     const response = await request(app)
       .put(`/movies/update/${movieId}`)
       .send({})
@@ -53,6 +53,43 @@ describe("Testando rota de usuário", () => {
     expect(response.body).toHaveProperty(
       "message",
       "Não foi possível atualizar o filme"
+    );
+  });
+});
+
+describe("Testando rota de usuário", () => {
+  it("Não deve fazer o update do filme, pois o nome já está cadastrado no sistema.", async () => {
+    const movieId = "0bf474d4-aad2-4237-8e45-3acfebc32cdc";
+    const response = await request(app)
+      .put(`/movies/update/${movieId}`)
+      .send({
+        title: "Clube da Luta",
+        duration: 2,
+        release_date: "2010-06-10T00:00:00.000Z",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty("message", "Titulo já cadastrado");
+  });
+});
+
+describe("Testando rota de usuário", () => {
+  it("Não deve fazer o update do filme, pois alguns dos campos estava sem informações ao ser enviado para o sistema.", async () => {
+    const movieId = "0bf474d4-aad2-4237-8e45-3acfebc32cdc";
+    const response = await request(app)
+      .put(`/movies/update/${movieId}`)
+      .send({
+        title: "",
+        duration: 2,
+        release_date: "2010-06-10T00:00:00.000Z",
+      })
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Campos sem informações não são permitidos"
     );
   });
 });

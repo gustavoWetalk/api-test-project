@@ -22,6 +22,7 @@ export async function UpdateMoviesUseCase({
       id,
     },
   });
+
   if (!MovieExists) {
     return {
       success: false,
@@ -29,6 +30,19 @@ export async function UpdateMoviesUseCase({
     };
   }
 
+  const NameAlredyExiist = await prisma.movie.findUnique({
+    where:{
+      title
+    }
+  })
+    
+
+  if(title === NameAlredyExiist?.title){
+    return {
+      success: false,
+      error: "Titulo já cadastrado",
+    };
+  }
   if (title === "" || release_date === null || duration === null) {
     return {
       success: false,
