@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { UpdateMoviesRentUseCase } from "./updateMovieRentUseCase";
+import { UpdateMoviesRentUseCase } from "./UpdateMovieRentUseCase";
 
-export async function UpdateMoviesController(
+export async function UpdateMoviesRentController(
   req: Request,
   res: Response
 ): Promise<void> {
