@@ -12,8 +12,8 @@ export async function UpdateUserUseCase({
   email,
 }: {
   id: string;
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
 }): Promise<CreateUserResult> {
   const userExists = await prisma.user.findUnique({
     where: {
@@ -23,33 +23,34 @@ export async function UpdateUserUseCase({
   if (!userExists) {
     return {
       success: false,
-      error: "Não foi possível atualizar o Usuário",
+      error: "Não foi possível atualizar o Usuário: usuário não encontrado",
     };
   }
 
-  if (email === "" || name === "") {
-    return {
-      success: false,
-      error: "Campos sem informações não são permitidos",
-    };
-  }
-
-  if (!email && !name) {
+  if (!name && !email) {
     return {
       success: false,
       error:
-        "Não foi possível atualizar o Usuário, você deve colocar pelo menos uma informação para atualizar o usuário",
+        "Você deve fornecer pelo menos uma informação para atualizar o usuário",
     };
   }
+
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return {
+      success: false,
+      error: "Email inválido",
+    };
+  }
+
+  const dataToUpdate: { name?: string; email?: string } = {};
+  if (name) dataToUpdate.name = name;
+  if (email) dataToUpdate.email = email;
 
   await prisma.user.update({
     where: {
       id,
     },
-    data: {
-      name: name,
-      email: email,
-    },
+    data: dataToUpdate,
   });
 
   return {
