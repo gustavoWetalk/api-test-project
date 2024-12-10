@@ -70,7 +70,7 @@ describe("Testando rota de usuário", () => {
       .expect("Content-Type", /json/)
       .expect(400);
 
-    expect(response.body).toHaveProperty("message", "Titulo já cadastrado");
+    expect(response.body).toHaveProperty("message", "Título já cadastrado.");
   });
 });
 
@@ -90,6 +90,22 @@ describe("Testando rota de usuário", () => {
     expect(response.body).toHaveProperty(
       "message",
       "Campos sem informações não são permitidos"
+    );
+  });
+});
+
+describe("Testando rota de usuário", () => {
+  it("Não deve fazer o update do filme, pois nenhum dos campos estava preenchido.", async () => {
+    const movieId = "0bf474d4-aad2-4237-8e45-3acfebc32cdc";
+    const response = await request(app)
+      .put(`/movies/update/${movieId}`)
+      .send({})
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "message",
+      "Não foi possível atualizar o filme, você deve colocar pelo menos uma informação para atualizar o filme"
     );
   });
 });

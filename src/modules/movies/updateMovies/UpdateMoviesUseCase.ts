@@ -29,19 +29,19 @@ export async function UpdateMoviesUseCase({
       error: "Não foi possível atualizar o filme",
     };
   }
+  if (title) {
+    const NameAlreadyExist = await prisma.movie.findUnique({
+      where: {
+        title,
+      },
+    });
 
-  const NameAlredyExiist = await prisma.movie.findUnique({
-    where:{
-      title
+    if (NameAlreadyExist && NameAlreadyExist.id !== id) {
+      return {
+        success: false,
+        error: "Título já cadastrado.",
+      };
     }
-  })
-    
-
-  if(title === NameAlredyExiist?.title){
-    return {
-      success: false,
-      error: "Titulo já cadastrado",
-    };
   }
   if (title === "" || release_date === null || duration === null) {
     return {
